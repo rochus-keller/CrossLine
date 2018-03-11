@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/CrossLine" >
+        <file>Images/metro48.png</file>
+        <file>Images/metro32.png</file>
+        <file>Images/metro16.png</file>
+        <file>Images/metro128.png</file>
+        <file>Images/metro64.png</file>
+        <file>Images/close.png</file>
+        <file>Images/outline.png</file>
+        <file>Images/outline_item.png</file>
+    </qresource>
+</RCC>
