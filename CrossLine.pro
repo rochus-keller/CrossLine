@@ -17,7 +17,7 @@ win32 {
 		LIBS += -lqjpeg -lqgif
      }
  }else {
-	INCLUDEPATH += /home/me/Programme/Qt-4.4.3/include/Qt
+	INCLUDEPATH += $$[QT_INSTALL_PREFIX]/include/Qt
 	DESTDIR = ./tmp
 	OBJECTS_DIR = ./tmp
 	CONFIG(debug, debug|release) {
@@ -74,7 +74,7 @@ HasCLucene {
 #include(../NAF/Qtl2/Qtl2.pri)
 
 include(../Sqlite3/Sqlite3.pri)
-include(../../Libraries/QtApp/QtApp.pri)
+include(../QtApp/QtApp.pri)
 include(../Udb/Udb.pri)
 include(../Stream/Stream.pri)
 include(../Oln2/Oln2.pri)
