@@ -36,10 +36,10 @@ To use Qt with CrossLine you have to make the following modification: QTreeView:
 Follow these steps if you inted to build CrossLine yourself (don't forget to meet the preconditions before you start):
 
 1. Create a directory; let's call it BUILD_DIR
-2. Download the CrossLine source code from https://github.com/rochus-keller/CrossLine/archive/master.zip and unpack it to the BUILD_DIR.
+2. Download the CrossLine source code from https://github.com/rochus-keller/CrossLine/archive/master.zip and unpack it to the BUILD_DIR; rename the subdirectory to "CrossLine".
 3. Download the Stream source code from https://github.com/rochus-keller/Stream/archive/github.zip and unpack it to the BUILD_DIR; rename "Stream-github" to "Stream".
 4. Download the Udb source code from https://github.com/rochus-keller/Udb and unpack it to the BUILD_DIR; rename "Udb-github" to "Udb".
-5. Create the subdirectory "Sqlite3" in BUILD_DIR; download the Sqlite source from ftp://w017f51f@software.rochus-keller.info/Sqlite3.tar.gz and unpack it to the subdirectory.
+5. Create the subdirectory "Sqlite3" in BUILD_DIR; download the Sqlite source from http://software.rochus-keller.info/Sqlite3.tar.gz and unpack it to the subdirectory.
 6. Download the Txt source code from https://github.com/rochus-keller/Txt and unpack it to the BUILD_DIR; rename "Txt-github" to "Txt".
 7. Download the Oln2 source code from https://github.com/rochus-keller/Oln2 and unpack it to the BUILD_DIR; rename "Oln2-github" to "Oln2".
 8. Download the NAF source code from https://github.com/rochus-keller/NAF/archive/master.zip and unpack it to the BUILD_DIR; rename "NAF-Master" to "NAF". We only need the Gui2 subdirectory so you can delete all other stuff in the NAF directory.
