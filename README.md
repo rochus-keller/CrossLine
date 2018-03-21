@@ -4,10 +4,13 @@ CrossLine is an outliner with sophisticated cross-link capabilities in the tradi
 
 An outliner (or outline processor) is a specialized type of text editor (word processor) used to create and edit outlines, which are text files which have a tree structure, for organization. Textual information is contained in discrete sections called "nodes", which are arranged according to their topic–subtopic (parent–child) relationships, sort of like the members of a family tree. When loaded into an outliner, an outline may be collapsed or expanded to display as few or as many levels as desired (see https://en.wikipedia.org/wiki/Outliner).
 
+![alt text](http://software.rochus-keller.info/crosslinedemoscreenshot.png "CrossLine Screenshot")
+
 ## Download and Installation
 
 You can either compile CrossLine yourself or download
 the pre-compiled version from here: http://software.rochus-keller.info/CrossLine_win32.zip
+
 This is a compressed single-file executable which was built using the source code from here. Of course you can build the executable yourself if you want (see below for instructions). Since it is a single executable, it can just be downloaded and unpacked. No installation is necessary. You therefore need no special privileges to run CrossLine on your machine. 
 
 Here is a demo file with some instructions on how to use CrossLine: http://software.rochus-keller.info/CrossLineDemo.cldb
