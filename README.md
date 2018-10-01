@@ -9,7 +9,11 @@ An outliner (or outline processor) is a specialized type of text editor (word pr
 ## Download and Installation
 
 You can either compile CrossLine yourself or download
-the pre-compiled version from here: http://software.rochus-keller.info/CrossLine_win32.zip
+the pre-compiled version from here: 
+
+http://software.rochus-keller.info/CrossLine_win32.zip
+
+http://software.rochus-keller.info/CrossLine_linux_x86.tar.gz
 
 This is a compressed single-file executable which was built using the source code from here. Of course you can build the executable yourself if you want (see below for instructions). Since it is a single executable, it can just be downloaded and unpacked. No installation is necessary. You therefore need no special privileges to run CrossLine on your machine. 
 
