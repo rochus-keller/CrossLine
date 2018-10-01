@@ -23,7 +23,7 @@ Here is a demo file with some instructions on how to use CrossLine: http://softw
 ## How to Build CrossLine
 
 ### Preconditions
-CrossLine was originally developed using Qt4.x. The single-file executables are static builds based on Qt 4.4.3. But it compiles also well with the Qt 4.8 series and should also be compatible with Qt 5.x. 
+CrossLine was originally developed using Qt4.x. The single-file executables are static builds based on Qt 4.4.3. But it compiles also well with the Qt 4.8 series; the current version is not compatible with Qt 5.x. 
 
 You can download the Qt 4.4.3 source tree from here: http://download.qt.io/archive/qt/4.4/qt-all-opensource-src-4.4.3.tar.gz
 
