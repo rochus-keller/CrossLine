@@ -167,7 +167,11 @@ static void _pushObject(lua_State * L, const Obj& o )
 	else if( t == Oln::Outline::TID )
 		CoBin<Oln::Outline>::create( L, o );
 	else
-		luaL_error( L, "cannot create binding object for type ID %d", t );
+	{
+		lua_pushnil(L);
+		// luaL_error hier nicht sinnvoll, da auch aus normalem Code heraus aufgerufen
+		qWarning( "cannot create binding object for type ID %d", t );
+	}
 }
 
 void Binding::install(lua_State *L)
