@@ -1,5 +1,5 @@
-#ifndef __Mp_DocTabWidget__
-#define __Mp_DocTabWidget__
+#ifndef __Oln_DocTabWidget__
+#define __Oln_DocTabWidget__
 
 /*
 * Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.info>
@@ -25,7 +25,7 @@
 
 class QToolButton;
 
-namespace Mp
+namespace Oln
 {
 	class DocTabWidget : public QTabWidget
 	{

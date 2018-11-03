@@ -51,7 +51,7 @@
 #include <Oln2/OutlineItem.h>
 #include <QTabWidget>
 #include <QtDebug>
-#include <MasterPlan/DocTabWidget.h>
+#include "DocTabWidget.h"
 #ifdef _HAS_LUA_
 #include <Script/Terminal2.h>
 #include "Binding.h"
@@ -77,7 +77,7 @@ Outliner::Outliner(Repository *doc, QWidget *parent)
 	Outline::TID = TypeOutline;
 
 
-	d_tab = new Mp::DocTabWidget( this, false );
+	d_tab = new Oln::DocTabWidget( this, false );
 	d_tab->setFocusPolicy(Qt::StrongFocus);
 	d_tab->setCloserIcon( ":/CrossLine/Images/close.png" );
 	setCentralWidget( d_tab );

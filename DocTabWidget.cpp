@@ -23,7 +23,7 @@
 #include <Gui2/UiFunction.h>
 #include <Udb/Database.h>
 #include "DocSelector.h"
-using namespace Mp;
+using namespace Oln;
 
 quint32 DocTabWidget::attrText = 0;
 
@@ -35,7 +35,7 @@ DocTabWidget::DocTabWidget( QWidget* p, bool hideSingleTab ):QTabWidget(p),
 	connect( this, SIGNAL( currentChanged ( int  ) ), this, SLOT( onTabChanged( int ) ) );
 	d_closer = new QToolButton( this );
 	d_closer->setEnabled(true);
-	d_closer->setIcon( QIcon( ":/CrossLine/images/close.png" ) );
+	d_closer->setIcon( QIcon( ":/MasterPlan/images/close.png" ) );
 	d_closer->setAutoRaise( true );
 	d_closer->setEnabled( false );
 	connect( d_closer, SIGNAL( clicked() ), this, SLOT( onCloseDoc() ) );

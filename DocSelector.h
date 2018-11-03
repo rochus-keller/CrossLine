@@ -27,7 +27,7 @@ class QAbstractItemModel;
 class QListView;
 class QModelIndex;
 
-namespace Mp
+namespace Oln
 {
 	class DocSelector : public QWidget
 	{

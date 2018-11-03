@@ -32,10 +32,6 @@ class QToolButton;
 class QMenu;
 class QAction;
 
-namespace Mp
-{
-	class DocTabWidget;
-}
 namespace Oln
 {
 	class OutlineUdbCtrl;
@@ -44,6 +40,7 @@ namespace Oln
 	class SearchView2;
 	class RefByItemMdl;
     class Repository;
+	class DocTabWidget;
 
 	class Outliner : public QMainWindow
 	{
@@ -134,7 +131,7 @@ namespace Oln
 		QList<OutlineUdbCtrl*> d_docks;
 		SearchView* d_search;
 		SearchView2* d_sv2;
-		Mp::DocTabWidget* d_tab;
+		Oln::DocTabWidget* d_tab;
 		QList<Udb::OID> d_backHisto; // d_backHisto.last() ist aktuell angezeigtes Objekt
 		QList<Udb::OID> d_forwardHisto;
 		Repository* d_doc;

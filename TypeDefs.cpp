@@ -21,7 +21,7 @@
 #include <Udb/Database.h>
 #include <Udb/Obj.h>
 #include <Oln2/OutlineItem.h>
-#include <MasterPlan/DocTabWidget.h>
+#include "DocTabWidget.h"
 using namespace Oln;
 using namespace Udb;
 
@@ -56,7 +56,7 @@ void TypeDefs::init( Database& db )
 		db.createIndex( IndexDefs::IdxEndDate, def );
 	}
 	*/
-    Mp::DocTabWidget::attrText = AttrText;
+	Oln::DocTabWidget::attrText = AttrText;
 }
 
 QString TypeDefs::prettyTitle( const Udb::Obj& o, bool withTime, bool fullInfo )

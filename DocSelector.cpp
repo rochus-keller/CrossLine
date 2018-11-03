@@ -27,7 +27,7 @@
 #include <QDesktopWidget>
 #include <QApplication>
 
-namespace Mp
+namespace Oln
 {
 class DocSelectorMdl : public QAbstractListModel
 {
