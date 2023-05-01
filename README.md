@@ -43,7 +43,7 @@ Follow these steps if you want to build CrossLine yourself:
 1. Download the CrossLine source code from https://github.com/rochus-keller/CrossLine/archive/master.zip and unpack it to the root directory; rename the resulting directory to "CrossLine".
 1. Download https://github.com/rochus-keller/Fts/archive/refs/heads/leanqt.zip and unpack it to the root directory; rename the resulting directory to "Fts".
 1. Download https://github.com/rochus-keller/Oln2/archive/refs/heads/leanqt.zip and unpack it to the root directory; rename the resulting directory to "Oln2".
-1. Download https://github.com/rochus-keller/Stram/archive/refs/heads/leanqt.zip and unpack it to the root directory; rename the resulting directory to "Stream".
+1. Download https://github.com/rochus-keller/Stream/archive/refs/heads/leanqt.zip and unpack it to the root directory; rename the resulting directory to "Stream".
 1. Download https://github.com/rochus-keller/Txt/archive/refs/heads/leanqt.zip and unpack it to the root directory; rename the resulting directory to "Txt".
 1. Download https://github.com/rochus-keller/Udb/archive/refs/heads/leanqt.zip and unpack it to the root directory; rename the resulting directory to "GuiTools".
 1. Create the subdirectory "Sqlite3" the root directory; download the Sqlite source from http://software.rochus-keller.ch/Sqlite3.tar.gz and unpack it to the subdirectory.
