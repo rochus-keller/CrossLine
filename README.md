@@ -8,56 +8,54 @@ An outliner (or outline processor) is a specialized type of text editor (word pr
 
 ## Download and Installation
 
-You can either compile CrossLine yourself or download
-the pre-compiled version from here: 
+You can either compile CrossLine yourself or download the pre-compiled version from here: 
 
-http://software.rochus-keller.ch/CrossLine_win32.zip
+- [Windows x86](http://software.rochus-keller.ch/CrossLine_win32.zip)
+- [Windows x64](http://software.rochus-keller.ch/CrossLine_win64.zip)
+- [Linux x86](http://software.rochus-keller.ch/CrossLine_linux_x86.tar.gz)
+- [Linux x64](http://software.rochus-keller.ch/CrossLine_linux_x64.tar.gz)
+- [Mac x64](http://software.rochus-keller.ch/CrossLine_macos_x64.zip)
 
-http://software.rochus-keller.ch/CrossLine_linux_x86.tar.gz
 
 This is a compressed single-file executable which was built using the source code from here. Of course you can build the executable yourself if you want (see below for instructions). Since it is a single executable, it can just be downloaded and unpacked. No installation is necessary. You therefore need no special privileges to run CrossLine on your machine. 
 
-Here is a demo file with some instructions on how to use CrossLine: http://software.rochus-keller.ch/CrossLineDemo.cldb
+On Mac the terminal opens when CrossLine is run, and the menus are only active if the application was in the background one time; to avoid this the application can be included in an application bundle. Also note that the application on Mac must be started via the "open" command from the context menu; otherwise the system refuses to start the app.
+
+Note that the Windows versions are built with MT flag using a statically linked C/C++ runtime, so no Microsoft runtime has to be installed. The executable runs even on Windows 7.
+
+Here is a demo file with some instructions on how to use CrossLine: [CrossLineDemo.cldb](http://software.rochus-keller.ch/CrossLineDemo.cldb)
+
+Here are the old Qt4 based versions if need be (use the new versions above if possile):
+
+- [Windows x86](http://software.rochus-keller.ch/CrossLine_win32_qt4.zip)
+- [Linux x86](http://software.rochus-keller.ch/CrossLine_linux_x86_qt4.tar.gz)
 
 
 ## How to Build CrossLine
 
-### Preconditions
-CrossLine was originally developed using Qt4.x. The single-file executables are static builds based on Qt 4.4.3. But it compiles also well with the Qt 4.8 series; the current version is not compatible with Qt 5.x. 
+This version of CrossLine now uses [LeanQt](https://github.com/rochus-keller/LeanQt) instead of the modified Qt4 toolkit, which makes things easier. 
+Follow these steps if you want to build CrossLine yourself:
 
-You can download the Qt 4.4.3 source tree from here: http://download.qt.io/archive/qt/4.4/qt-all-opensource-src-4.4.3.tar.gz
+1. Create a new directory; we call it the root directory here.
+1. Download https://github.com/rochus-keller/BUSY/archive/refs/heads/master.zip and unpack it to the root directory; rename the resulting directory to "build".
+1. Download https://github.com/rochus-keller/LeanQt/archive/refs/heads/master.zip and unpack it to the root directory; rename the resulting directory to "LeanQt".
+1. Download https://github.com/rochus-keller/GuiTools/archive/refs/heads/master.zip and unpack it to the root directory; rename the resulting directory to "GuiTools".
+1. Download the CrossLine source code from https://github.com/rochus-keller/CrossLine/archive/master.zip and unpack it to the root directory; rename the resulting directory to "CrossLine".
+1. Download https://github.com/rochus-keller/Fts/archive/refs/heads/leanqt.zip and unpack it to the root directory; rename the resulting directory to "Fts".
+1. Download https://github.com/rochus-keller/Oln2/archive/refs/heads/leanqt.zip and unpack it to the root directory; rename the resulting directory to "Oln2".
+1. Download https://github.com/rochus-keller/Stram/archive/refs/heads/leanqt.zip and unpack it to the root directory; rename the resulting directory to "Stream".
+1. Download https://github.com/rochus-keller/Txt/archive/refs/heads/leanqt.zip and unpack it to the root directory; rename the resulting directory to "Txt".
+1. Download https://github.com/rochus-keller/Udb/archive/refs/heads/leanqt.zip and unpack it to the root directory; rename the resulting directory to "GuiTools".
+1. Create the subdirectory "Sqlite3" the root directory; download the Sqlite source from http://software.rochus-keller.ch/Sqlite3.tar.gz and unpack it to the subdirectory.
+1. Open a command line in the build directory and type `cc *.c -O2 -lm -o lua` or `cl /O2 /MD /Fe:lua.exe *.c` depending on whether you are on a Unix or Windows machine; wait a few seconds until the Lua executable is built.
+1. Now type `./lua build.lua ../CrossLine` (or `lua build.lua ../CrossLine` on Windows); wait until the CrossLine executable is built; you find it in the output subdirectory.
 
-The source tree also includes documentation and build instructions.
+NOTE that if you build on Windows you have to first run vcvars32.bat or vcvars64.bat provided e.g. by VisualStudio (see e.g. [here](https://learn.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=msvc-170) for more information) from the command line to set all required paths and environment variables.
 
-If you intend to do static builds on Windows without dependency on C++ runtime libs and manifest complications, follow the recommendations in this post: http://www.archivum.ch/qt-interest@trolltech.com/2007-02/00039/Fed-up-with-Windows-runtime-DLLs-and-manifest-files-Here's-a-solution.html
-
-Here is the summary on how to do implement Qt Win32 static builds:
-1. in Qt/mkspecs/win32-msvc2005/qmake.conf replace MD with MT and MDd with MTd
-2. in Qt/mkspecs/features clear the content of the two embed_manifest_*.prf files (but don't delete the files)
-3. run configure -release -static -platform win32-msvc2005
-
-To use Qt with CrossLine you have to make the following modification: QTreeView::indexRowSizeHint has to be virtual; the correspondig line in qtreeview.h should look like:
-    virtual int indexRowSizeHint(const QModelIndex &index) const;
-
-### Build Steps
-Follow these steps if you inted to build CrossLine yourself (don't forget to meet the preconditions before you start):
-
-1. Create a directory; let's call it BUILD_DIR
-2. Download the CrossLine source code from https://github.com/rochus-keller/CrossLine/archive/master.zip and unpack it to the BUILD_DIR; rename the subdirectory to "CrossLine".
-3. Download the Stream source code from https://github.com/rochus-keller/Stream/archive/github.zip and unpack it to the BUILD_DIR; rename "Stream-github" to "Stream".
-4. Download the Udb source code from https://github.com/rochus-keller/Udb and unpack it to the BUILD_DIR; rename "Udb-github" to "Udb".
-5. Create the subdirectory "Sqlite3" in BUILD_DIR; download the Sqlite source from http://software.rochus-keller.ch/Sqlite3.tar.gz and unpack it to the subdirectory.
-6. Download the Txt source code from https://github.com/rochus-keller/Txt and unpack it to the BUILD_DIR; rename "Txt-github" to "Txt".
-7. Download the Oln2 source code from https://github.com/rochus-keller/Oln2 and unpack it to the BUILD_DIR; rename "Oln2-github" to "Oln2".
-8. Download the NAF source code from https://github.com/rochus-keller/NAF/archive/master.zip and unpack it to the BUILD_DIR; rename "NAF-Master" to "NAF". We only need the Gui2 subdirectory so you can delete all other stuff in the NAF directory.
-9. Download the Fts source code from https://github.com/rochus-keller/Fts and unpack it to the BUILD_DIR; rename "Fts-github" to "Fts".
-10. Download the QtSingleApplication source files from https://github.com/qtproject/qt-solutions/tree/master/qtsingleapplication/src and copy them to BUILD_DIR/QtApp directory together with this file: http://software.rochus-keller.ch/QtApp.pri
-11. Goto the BUILD_DIR/CrossLine subdirectory and execute `QTDIR/bin/qmake CrossLine.pro` (see the Qt documentation concerning QTDIR).
-12. Run make; after a couple of minutes you will find the executable in the tmp subdirectory.
-
-Alternatively you can open CrossLine.pro using QtCreator and build it there.
-
-This procedure builds plain CrossLine without Lua and CLucene support which is sufficient for most use cases. 
+If you already have a [LeanCreator](https://github.com/rochus-keller/LeanCreator/) executable on your machine, you can alternatively open the root_directory/CrossLine/BUSY file with LeanCreator and build it there using all available CPU cores (don't forget to switch to Release mode); this is simpler and faster than the command line build.
 
 ## Support
 If you need support or would like to post issues or feature requests please use the Github issue list at https://github.com/rochus-keller/CrossLine/issues or send an email to the author.
+
+
+

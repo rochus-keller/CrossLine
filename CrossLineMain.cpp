@@ -1,11 +1,11 @@
 /*
-* Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.info>
+* Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.ch>
 *
 * This file is part of the CrossLine application.
 *
 * The following is the license that applies to this copy of the
 * application. For a license to use the application under conditions
-* other than those described here, please email to me@rochus-keller.info.
+* other than those described here, please email to me@rochus-keller.ch.
 *
 * GNU General Public License Usage
 * This file may be used under the terms of the GNU General Public
@@ -29,26 +29,24 @@
 #include <QFileDialog>
 #include <QApplication>
 #include <QtPlugin>
-#include <QtApp/QtSingleApplication>
+#include <QtSingleApplication>
 #include <QtDebug>
 #include <iostream>
 #include "AppContext.h"
 using namespace Oln;
 
-Q_IMPORT_PLUGIN(qgif)
-Q_IMPORT_PLUGIN(qjpeg)
-
-static QtMsgHandler s_oldHandler = 0;
-void messageHander(QtMsgType type, const char * message)
+static QtMessageHandler s_oldHandler = 0;
+void messageHander(QtMsgType type, const QMessageLogContext& ctx, const QString& message)
 {
 	QFile file(QString("%1/CrossLine.log").arg(QApplication::applicationDirPath()));
 	file.open(QIODevice::Append);
-	file.write(message,strlen(message));
+    const QByteArray tmp = message.toUtf8();
+    file.write(tmp,tmp.size());
 	file.write("\n");
 	if( s_oldHandler )
-		s_oldHandler(type, message );
+        s_oldHandler(type, ctx, message );
 	else
-		std::cerr << message << std::endl;
+        std::cerr << tmp.constData() << std::endl;
 }
 
 class MyApp : public QtSingleApplication
@@ -84,7 +82,7 @@ int main(int argc, char *argv[])
 {
 	MyApp app( AppContext::s_appName, argc, argv);
 
-	s_oldHandler = qInstallMsgHandler(messageHander);
+    s_oldHandler = qInstallMessageHandler(messageHander);
 
 	QIcon icon;
 	icon.addFile( ":/CrossLine/Images/metro16.png" );
@@ -115,7 +113,7 @@ int main(int argc, char *argv[])
 		
 		QStringList args = QCoreApplication::arguments();
         QString oidArg;
-		for( int i = 1; i < args.size(); i++ ) // arg 0 enthält Anwendungspfad
+		for( int i = 1; i < args.size(); i++ ) // arg 0 enthÃ¤lt Anwendungspfad
 		{
             if( !args[ i ].startsWith( '-' ) )
 			{
@@ -135,7 +133,7 @@ int main(int argc, char *argv[])
 		if( path.isEmpty() )
 			return 0;
 
-        // NOTE: path kommt immer ohne Anführungs- und Schlusszeichen, auch wenn er Spaces enthält
+        // NOTE: path kommt immer ohne AnfÃ¼hrungs- und Schlusszeichen, auch wenn er Spaces enthÃ¤lt
         if( path.contains( QChar(' ') ) && path[0] != QChar('"') )
             path = QChar('"') + path + QChar('"');
 

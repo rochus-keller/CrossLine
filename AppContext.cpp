@@ -1,11 +1,11 @@
 /*
-* Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.info>
+* Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.ch>
 *
 * This file is part of the CrossLine application.
 *
 * The following is the license that applies to this copy of the
 * application. For a license to use the application under conditions
-* other than those described here, please email to me@rochus-keller.info.
+* other than those described here, please email to me@rochus-keller.ch.
 *
 * GNU General Public License Usage
 * This file may be used under the terms of the GNU General Public
@@ -17,12 +17,11 @@
 * http://www.gnu.org/copyleft/gpl.html.
 */
 
-#include <AppContext.h>
+#include "AppContext.h"
 #include "TypeDefs.h"
 #include <Udb/DatabaseException.h>
 #include <QApplication>
 #include <QIcon>
-#include <QPlastiqueStyle>
 #include <QFileInfo>
 #include <QDir>
 #include <QSettings>
@@ -30,6 +29,7 @@
 #include <QLabel>
 #include <QDesktopServices>
 #include <QVBoxLayout>
+#include <QtGui/private/qtextdocument_p.h>
 #ifdef _HAS_LUA_
 #include <Qtl2/Objects.h>
 #include <Qtl2/Variant.h>
@@ -45,12 +45,12 @@ using namespace Udb;
 
 static AppContext* s_inst;
 const char* AppContext::s_company = "Dr. Rochus Keller";
-const char* AppContext::s_domain = "me@rochus-keller.info";
+const char* AppContext::s_domain = "me@rochus-keller.ch";
 const char* AppContext::s_appName = "CrossLine";
 const char* AppContext::s_extension = ".cldb";
 const char* AppContext::s_rootUuid = "{4A21E972-C254-4282-BD9F-714F8E0C7865}";
-const char* AppContext::s_version = "0.9.4";
-const char* AppContext::s_date = "2018-03-11";
+const char* AppContext::s_version = "0.9.5";
+const char* AppContext::s_date = "2023-05-01";
 
 #ifdef _HAS_LUA_
 static int type(lua_State * L)
@@ -76,7 +76,9 @@ AppContext::AppContext(QObject *parent)
 	qApp->setOrganizationDomain( s_domain );
 	qApp->setApplicationName( s_appName );
 
-	qApp->setStyle( new QPlastiqueStyle() );
+    qApp->setStyle("Fusion");
+
+    QTextDocumentPrivate::initialDocumentMargin = 2; // LeanQt specific
 
 	d_set = new QSettings( s_appName, s_appName, this );
 
@@ -87,7 +89,7 @@ AppContext::AppContext(QObject *parent)
 		QFont f = d_set->value( "Outliner/Font" ).value<QFont>();
 		d_styles->setFontStyle( f.family(), f.pointSize() );
 	}
-    QDesktopServices::setUrlHandler( tr("xoid"), this, "onHandleXoid" ); // hier ohne SLOT und ohne Args nötig!
+    QDesktopServices::setUrlHandler( tr("xoid"), this, "onHandleXoid" ); // hier ohne SLOT und ohne Args nÃ¶tig!
 
 #ifdef _HAS_LUA_
 	Lua::Engine2::setInst( new Lua::Engine2() );
@@ -109,7 +111,7 @@ AppContext::AppContext(QObject *parent)
 AppContext::~AppContext()
 {
     foreach( Outliner* o, d_outliner )
-        o->close(); // das selbst qApp->quit() zuerst alle Fenster schliesst, dürfte das nie vorkommen.
+        o->close(); // das selbst qApp->quit() zuerst alle Fenster schliesst, dÃ¼rfte das nie vorkommen.
     s_inst = 0;
 }
 
@@ -200,8 +202,8 @@ bool AppContext::open(QString cmdLine)
     if( !r->open( path  ) )
     {
         delete r;
-        // Wir können das Repository nicht öffnen.
-        // Gib false zurück, wenn ansonsten kein Outline offen ist, damit Anwendung enden kann.
+        // Wir kÃ¶nnen das Repository nicht Ã¶ffnen.
+        // Gib false zurÃ¼ck, wenn ansonsten kein Outline offen ist, damit Anwendung enden kann.
         return d_outliner.isEmpty();
     }
 	Outliner* o = new Outliner( r );

@@ -2,13 +2,13 @@
 #define __TypeDefs__
 
 /*
-* Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.info>
+* Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.ch>
 *
 * This file is part of the CrossLine application.
 *
 * The following is the license that applies to this copy of the
 * application. For a license to use the application under conditions
-* other than those described here, please email to me@rochus-keller.info.
+* other than those described here, please email to me@rochus-keller.ch.
 *
 * GNU General Public License Usage
 * This file may be used under the terms of the GNU General Public
@@ -50,8 +50,8 @@ namespace Oln
 		//AttrName = OlnStart + 3, // String|RTXT, optional; anzeigbarer Titel des Objekts
 		AttrText = OlnStart + 4, // String|HTML|RTXT: optional; anzeigbarer Titel oder Inhalt, je nach Objekt
 		AttrSummary = OlnStart + 21, // String|HTML|RTXT: optionale Zusatzinformation, Abstrakt, ToolTip
-		AttrIdent = OlnStart + 22, // String: optionaler human-readable Identifier, eindeutig pro Aggregat oder global für Toplevels
-		AttrValuta = OlnStart + 23 // DateTime: optional, "in Kraft getreten am, freigegeben am, gültig ab"
+		AttrIdent = OlnStart + 22, // String: optionaler human-readable Identifier, eindeutig pro Aggregat oder global fÃ¼r Toplevels
+		AttrValuta = OlnStart + 23 // DateTime: optional, "in Kraft getreten am, freigegeben am, gÃ¼ltig ab"
 	};
 
 	// Outline Items bilden einen Baum als Aggregate-Children. Der Root des Outlines ist selber ein
@@ -64,8 +64,8 @@ namespace Oln
 		AttrItemIsExpanded = OlnStart + 11, // bool: offen oder geschlossen
 		AttrItemIsTitle = OlnStart + 12, // bool: stellt das Item einen Title dar oder einen Text
 		AttrItemIsReadOnly = OlnStart + 13, // bool: ist Item ein Fixtext oder kann es bearbeitet werden
-		//AttrItemIsFixedSubs = OlnStart + 14, // bool: dem Item können keine Subs beigefügt oder entfernt werden
-		//AttrItemIsFixedPos = OlnStart + 15, // bool: das Item kann nicht verschoben oder gelöscht werden.
+		//AttrItemIsFixedSubs = OlnStart + 14, // bool: dem Item kÃ¶nnen keine Subs beigefÃ¼gt oder entfernt werden
+		//AttrItemIsFixedPos = OlnStart + 15, // bool: das Item kann nicht verschoben oder gelÃ¶scht werden.
 		AttrItemHome = OlnStart + 16, // OID: Referenz auf Root des Outlines vom Typ TypeOutline
 		AttrItemAlias = OlnStart + 18 // OID: optionale Referenz auf anderes Item, dessen Body statt des eigenen angezeigt wird.
 	};
@@ -73,8 +73,8 @@ namespace Oln
 	enum TypeDef_Root
 	{
 		AttrRootDockList = OlnStart + 24, // BML (OID...OID), Liste aller OutlineDocks
-		AttrRootTabList = OlnStart + 25, // BML (OID..OID), Liste aller geöffneten Tabs
-		AttrAutoOpen = OlnStart + 27   // OID: optionale Referenz auf ein Outline, das beim Start geöffnet wird
+		AttrRootTabList = OlnStart + 25, // BML (OID..OID), Liste aller geÃ¶ffneten Tabs
+		AttrAutoOpen = OlnStart + 27   // OID: optionale Referenz auf ein Outline, das beim Start geÃ¶ffnet wird
 	};
 
 	struct TypeDefs

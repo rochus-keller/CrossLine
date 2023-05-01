@@ -1,11 +1,11 @@
 /*
-* Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.info>
+* Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.ch>
 *
 * This file is part of the CrossLine application.
 *
 * The following is the license that applies to this copy of the
 * application. For a license to use the application under conditions
-* other than those described here, please email to me@rochus-keller.info.
+* other than those described here, please email to me@rochus-keller.ch.
 *
 * GNU General Public License Usage
 * This file may be used under the terms of the GNU General Public
@@ -37,7 +37,8 @@
 #include <QProgressDialog>
 #include <QFileInfo>
 #include <QDir>
-#include <Gui2/UiFunction.h>
+#include <QMimeData>
+#include <GuiTools/UiFunction.h>
 #include <Oln2/OutlineUdbMdl.h>
 #include <Oln2/OutlineItem.h>
 #include <Udb/Transaction.h>
@@ -212,7 +213,7 @@ SearchView2::SearchView2(Outliner *parent) :
 	d_result->setExpandsOnDoubleClick(false);
 	d_result->setHeaderLabels( QStringList() << tr("Outline/Items") << tr("Valid") << tr("Hits") );
 	d_result->setAlternatingRowColors( true );
-	d_result->header()->setResizeMode( _Item, QHeaderView::Stretch );
+    d_result->header()->setSectionResizeMode( _Item, QHeaderView::Stretch );
 	d_result->setColumnWidth( _Date, 80 );
 	d_result->setColumnWidth( _Score, 40 );
 	connect( d_result, SIGNAL( itemDoubleClicked ( QTreeWidgetItem *, int ) ), this, SLOT( doGoto() ) );
@@ -321,10 +322,14 @@ void SearchView2::doSearch()
 			_SearchView2Item* p = new _SearchView2Item( doc, d_result );
 			p->setData( _Score, Qt::DisplayRole, res[i].d_rank );
 			p->setText( _Date, _valuta( doc ) );
-			foreach( const Fts::IndexEngine::ItemHit& h, res[i].d_items )
+            QSize s = p->sizeHint(0);
+            s.setHeight( s.height() * 1.3);
+            p->setSizeHint(0,s);
+            foreach( const Fts::IndexEngine::ItemHit& h, res[i].d_items )
 			{
 				Udb::Obj o = d_idx->getTxn()->getObject( h.d_item );
 				_SearchView2Item* i = new _SearchView2Item( o, p );
+                i->setSizeHint( 0, s );
 				i->setData( _Score, Qt::DisplayRole, h.d_rank );
 			}
 		}

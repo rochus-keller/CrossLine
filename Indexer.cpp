@@ -17,7 +17,7 @@
 * http://www.gnu.org/copyleft/gpl.html.
 */
 
-// Index basierend auf CLucene; abgelˆst durch Fts
+// Index basierend auf CLucene; abgel√∂st durch Fts
 
 #include "Indexer.h"
 #include "TypeDefs.h"
@@ -91,14 +91,14 @@ Udb::Obj Indexer::gotoNext( const Udb::Obj& obj )
 	Udb::Obj next = obj;
 	while( !next.isNull() )
 	{
-		if( next.next() ) // wenn false bleibt next auf urspr¸nglichem Objekt, bzw. wir nicht null.
+		if( next.next() ) // wenn false bleibt next auf urspr√ºnglichem Objekt, bzw. wir nicht null.
 		{
-			// Es gibt einen n‰chsten
+			// Es gibt einen n√§chsten
 			if( toIndex( next.getType() ) )
 				// Wenn es sich um den richtigen Typ handelt, ist es unser Objekt.
 				return next;
 		}else
-			// Es gibt keinen n‰chsten. Gehe einen Stock nach oben. Der Owner wurde bereits behandelt, darum wieder next.
+			// Es gibt keinen n√§chsten. Gehe einen Stock nach oben. Der Owner wurde bereits behandelt, darum wieder next.
 			next = next.getParent();
 	}
 	return Udb::Obj();
@@ -123,10 +123,10 @@ Udb::Obj Indexer::gotoPrev( const Udb::Obj& obj )
 	{
 		if( prev.prev() )
 		{
-			// Es gibt einen Vorg‰nger
+			// Es gibt einen Vorg√§nger
 			if( toIndex( prev.getType() ) )
 			{
-				// Der Vorg‰nger hat den richtigen Type
+				// Der Vorg√§nger hat den richtigen Type
 				// Gehe zuunterst.
 				return gotoLast( prev );
 			}
@@ -487,7 +487,7 @@ void Indexer::onDbUpdate( Udb::UpdateInfo info )
 		return;
 
 	// mache hier eine richtige Kopie da durch die vorliegende Funktion die Notification List
-	// erg‰nzt wird.
+	// erg√§nzt wird.
 	QList<Udb::UpdateInfo> updates = d_pending.getTxn()->getPendingNotifications();
 	Udb::Obj::KeyList k(1);
 	for( int i = 0; i < updates.size(); i++ )
@@ -500,14 +500,14 @@ void Indexer::onDbUpdate( Udb::UpdateInfo info )
 				k[0].setOid( upd.d_id );
 				if( d_pending.getCell( k ).isNull() )
 					d_pending.setCell( k, Stream::DataCell().setBool( true ) );
-				// NOTE: kein commit, da in Pre-Commit der Transaction, wo die ƒnderung stattfand
+				// NOTE: kein commit, da in Pre-Commit der Transaction, wo die √Ñnderung stattfand
 				//qDebug() << "FullTextIndexer::onDbUpdate:" << upd.toString() << HeTypeDefs::prettyName( upd.d_name );
 			}
 		}else if( upd.d_kind == Udb::UpdateInfo::ObjectErased )
 		{
 			k[0].setOid( upd.d_id );
 			d_pending.setCell( k, Stream::DataCell().setBool( false ) );
-			// NOTE: kein commit, da in Pre-Commit der Transaction, wo die ƒnderung stattfand
+			// NOTE: kein commit, da in Pre-Commit der Transaction, wo die √Ñnderung stattfand
 			//qDebug() << "FullTextIndexer::onDbUpdate:" << upd.toString() << HeTypeDefs::prettyName( upd.d_name );
 		}
 	}

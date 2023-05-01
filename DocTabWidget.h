@@ -2,13 +2,13 @@
 #define __Oln_DocTabWidget__
 
 /*
-* Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.info>
+* Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.ch>
 *
 * This file is part of the CrossLine application.
 *
 * The following is the license that applies to this copy of the
 * application. For a license to use the application under conditions
-* other than those described here, please email to me@rochus-keller.info.
+* other than those described here, please email to me@rochus-keller.ch.
 *
 * GNU General Public License Usage
 * This file may be used under the terms of the GNU General Public
@@ -49,8 +49,8 @@ namespace Oln
 	signals:
 		void closing(int);
 	public slots:
-		void onCloseDoc(); // Menübefehl
-		void onDocSelect(); // Menübefehl
+		void onCloseDoc(); // MenÃ¼befehl
+		void onDocSelect(); // MenÃ¼befehl
         void onCloseAll();
         void onCloseAllButThis();
 	protected slots:

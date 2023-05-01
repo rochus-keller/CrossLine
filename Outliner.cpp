@@ -1,11 +1,11 @@
 /*
-* Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.info>
+* Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.ch>
 *
 * This file is part of the CrossLine application.
 *
 * The following is the license that applies to this copy of the
 * application. For a license to use the application under conditions
-* other than those described here, please email to me@rochus-keller.info.
+* other than those described here, please email to me@rochus-keller.ch.
 *
 * GNU General Public License Usage
 * This file may be used under the terms of the GNU General Public
@@ -24,8 +24,8 @@
 #include <Oln2/OutlineStream.h>
 #include <Oln2/OutlineUdbStream.h>
 #include <Oln2/RefByItemMdl.h>
-#include <Gui2/AutoMenu.h>
-#include <Gui2/AutoShortcut.h>
+#include <GuiTools/AutoMenu.h>
+#include <GuiTools/AutoShortcut.h>
 #include <QFontDialog>
 #include <QFileDialog>
 #include <QApplication>
@@ -49,6 +49,7 @@
 #include "ChangeNameDlg.h"
 #include <Oln2/OutlineToHtml.h>
 #include <Oln2/OutlineItem.h>
+#include <QMimeData>
 #include <QTabWidget>
 #include <QtDebug>
 #include "DocTabWidget.h"
@@ -58,7 +59,7 @@
 #endif
 #include "Repository.h"
 using namespace Oln;
-using namespace Gui2;
+using namespace Gui;
 
 Outliner::Outliner(Repository *doc, QWidget *parent)
 	: QMainWindow(parent), d_pushBackLock( 0 ), d_doc( doc ), d_fullScreen(false)
@@ -77,7 +78,7 @@ Outliner::Outliner(Repository *doc, QWidget *parent)
 	Outline::TID = TypeOutline;
 
 
-	d_tab = new Oln::DocTabWidget( this, false );
+    d_tab = new Oln::DocTabWidget( this, false );
 	d_tab->setFocusPolicy(Qt::StrongFocus);
 	d_tab->setCloserIcon( ":/CrossLine/Images/close.png" );
 	setCentralWidget( d_tab );
@@ -122,13 +123,13 @@ Outliner::Outliner(Repository *doc, QWidget *parent)
     }
 
 	new QShortcut( tr("CTRL+Q"), this, SLOT( close() ) );
-	new Gui2::AutoShortcut( tr("CTRL+TAB"), this, d_tab, SLOT(onDocSelect()) );
-	new Gui2::AutoShortcut( tr("CTRL+SHIFT+TAB"), this, d_tab, SLOT(onDocSelect()) );
-	new Gui2::AutoShortcut( tr("CTRL+W"), this, d_tab, SLOT(onCloseDoc()) );
-	new Gui2::AutoShortcut( tr("ALT+LEFT"),  this, this, SLOT(onGoBack()) );
-	new Gui2::AutoShortcut( tr("ALT+RIGHT"), this, this, SLOT(onGoForward()) );
-	new Gui2::AutoShortcut( tr("F11"), this, this, SLOT( onFullScreen() ) );
-	new Gui2::AutoShortcut( tr("CTRL+N"), this, this, SLOT( onNewOutline() ) );
+    new Gui::AutoShortcut( tr("CTRL+TAB"), this, d_tab, SLOT(onDocSelect()) );
+    new Gui::AutoShortcut( tr("CTRL+SHIFT+TAB"), this, d_tab, SLOT(onDocSelect()) );
+    new Gui::AutoShortcut( tr("CTRL+W"), this, d_tab, SLOT(onCloseDoc()) );
+    new Gui::AutoShortcut( tr("ALT+LEFT"),  this, this, SLOT(onGoBack()) );
+    new Gui::AutoShortcut( tr("ALT+RIGHT"), this, this, SLOT(onGoForward()) );
+    new Gui::AutoShortcut( tr("F11"), this, this, SLOT( onFullScreen() ) );
+    new Gui::AutoShortcut( tr("CTRL+N"), this, this, SLOT( onNewOutline() ) );
 
 	QApplication::restoreOverrideCursor();
 
@@ -159,7 +160,7 @@ void Outliner::onFollowUrl(const QUrl & url)
 {
     if( url.scheme() == "file" )
     {
-        // RISK: folgende Lösung ist temporär; ev. ein konfigurierbares Mapping einführen.
+        // RISK: folgende LÃ¶sung ist temporÃ¤r; ev. ein konfigurierbares Mapping einfÃ¼hren.
         QString path = url.toLocalFile();
         path.replace( QString("c:/users/rochus"), QString("/home/me"), Qt::CaseInsensitive );
         QFileInfo info( path );
@@ -215,7 +216,7 @@ OutlineUdbCtrl *Outliner::addOrShowTab( const Udb::Obj& oln, bool setCurrent, bo
         connect( ctrl, SIGNAL(sigLinkActivated(quint64)), this, SLOT(onSearchItemActivated(quint64)) );
 		ctrl->setOutline( oln, setCurrent );
 		if( addNew )
-			ctrl->addItem();
+            ctrl->addItem();
 		pos = d_tab->addDoc( w, oln, TypeDefs::prettyTitle( oln ) );
 		QApplication::restoreOverrideCursor();
 	}else
@@ -403,9 +404,9 @@ void Outliner::setupTrace()
 	tree->setPalette( pal );
 	tree->setAlternatingRowColors( true );
 	tree->setRootIsDecorated( false );
-	tree->setUniformRowHeights( false );
+    tree->setUniformRowHeights( true );
 	tree->setAllColumnsShowFocus(true);
-	tree->setWordWrap( true );
+    tree->setWordWrap( false );
 	tree->setSelectionBehavior( QAbstractItemView::SelectRows );
 	tree->setSelectionMode( QAbstractItemView::ExtendedSelection );
 	tree->header()->hide();
@@ -473,7 +474,7 @@ void Outliner::setupSearch2()
 
 	connect( d_sv2, SIGNAL(sigFollow(quint64) ), this, SLOT( onSearchItemActivated( quint64 ) ) );
 
-	Gui2::AutoMenu* pop = new Gui2::AutoMenu( d_sv2, true );
+    Gui::AutoMenu* pop = new Gui::AutoMenu( d_sv2, true );
 	pop->addCommand( tr("Clear"), d_sv2, SLOT(onClearSearch()) );
 	pop->addCommand( tr("Expand All"), d_sv2, SLOT(onOpenAll()) );
 	pop->addCommand( tr("Collapse All"), d_sv2, SLOT(onCloseAll()) );
@@ -1180,23 +1181,26 @@ void Outliner::onAbout()
 
 	QMessageBox::about( this, tr("About CrossLine"), 
 		tr("<html><body><p>Release: <strong>%1</strong>   Date: <strong>%2</strong> </p>"
-		   "<p>CrossLine is an Outliner with cross-link capabilities.</p>"
-		   "<p>Author: Rochus Keller, me@rochus-keller.info</p>"
+           "<p>CrossLine is an Outliner in the tradition of Ecco Pro with cross-link capabilities.</p>"
+		   "<p>Author: Rochus Keller, me@rochus-keller.ch</p>"
 		   "<p>Copyright (c) 2009-%3</p>"
-		   "<h4>Additional Credits:</h4>"
-		   "<p>Qt GUI Toolkit 4.4 (c) 1995-2008 Trolltech AS, 2008 Nokia Corporation<br>"
+           "<p>See <a href='https://github.com/rochus-keller/CrossLine'>the Github repository</a> for more information.</p>"
+           "<h4>Additional Credits:</h4>"
+           "<p>"
+           "<a href='https://github.com/rochus-keller/LeanQt'>LeanQt</a>, Copyright (c) 2022 Rochus Keller, "
+                "2016 The Qt Company Ltd, 2008 Nokia, 1992 Trolltech AS<br>"
 		   "Sqlite 3.5, <a href='http://sqlite.org/copyright.html'>dedicated to the public domain by the authors</a><br>"
-		   "<a href='http://www.sourceforge.net/projects/clucene'>CLucene</a> Copyright (C) 2003-2006 Ben van Klinken and the CLucene Team<br>"
-		   "<a href='http://snowball.tartarus.org/'>Libstemmer</a> Copyright (c) 2001/2002, Dr Martin Porter, Richard Boulton<br>"
-		   "Lua 5.1 by R. Ierusalimschy, L. H. de Figueiredo & W. Celes (c) 1994-2006 Tecgraf, PUC-Rio<p>"
-		   "<h4>Terms of use:</h4>"
-		   "<p>This version of CrossLine is freeware, i.e. it can be used for free by anyone. "
-		   "The software and documentation are provided \"as is\", without warranty of any kind, "
-		   "expressed or implied, including but not limited to the warranties of merchantability, "
-		   "fitness for a particular purpose and noninfringement. In no event shall the author or "
-		   "copyright holders be liable for any claim, damages or other liability, whether in an action "
-		   "of contract, tort or otherwise, arising from, out of or in connection with the software or the "
-		   "use or other dealings in the software.</p></body></html>" )
+#ifdef _HAS_CLUCENE_
+           "<a href='http://www.sourceforge.net/projects/clucene'>CLucene</a>, Copyright (c) "
+                "2006 Ben van Klinken and the CLucene Team<br>"
+#endif
+           "<a href='http://snowball.tartarus.org/'>Libstemmer</a>, Copyright (c) 2002 Dr Martin Porter, Richard Boulton<br>"
+#ifdef _HAS_LUA_
+           "Lua 5.1, (c) 2006 Tecgraf, PUC-Rio<br>"
+#endif
+           "<p><h4>Terms of use:</h4>"
+           "CrossLine is available under <a href=\"https://www.gnu.org/licenses/license-list.html#GNUGPL\">GNU GPL v2 or v3</a>."
+           "</body></html>" )
         .arg( AppContext::s_version ).arg( AppContext::s_date ).arg( QDate::currentDate().year() ) );
 }
 
@@ -1260,7 +1264,7 @@ void Outliner::showAsDock( const Udb::Obj& oln )
 	Oln::OutlineUdbCtrl* ctrl = OutlineUdbCtrl::create( dock, d_doc->getTxn() );
 	ctrl->getTree()->setShowNumbers( false );
 	ctrl->getTree()->setIndentation( 10 );
-	ctrl->getTree()->setHandleWidth( 7 );
+    ctrl->getTree()->setHandleWidth( 7 );
 
 	// connect( ctrl->getTree(), SIGNAL( identClicked() ), this, SLOT( onDockItemSelected() ) ); // zu extrem
 	connect( ctrl, SIGNAL( sigCurrentChanged( quint64 ) ), this, SLOT( onCurrentItemChanged( quint64 ) ) );
@@ -1274,8 +1278,8 @@ void Outliner::showAsDock( const Udb::Obj& oln )
 
 	d_pushBackLock++;
 	ctrl->setOutline( oln, true );
-	// Durch diesen Trick ist oberstes Item current ohne dass es in backHisto eingefügt wird.
-	// Bei false wird current Event ausgelöst beim ersten Fokus was schwieriger zu vermeiden ist.
+	// Durch diesen Trick ist oberstes Item current ohne dass es in backHisto eingefÃ¼gt wird.
+	// Bei false wird current Event ausgelÃ¶st beim ersten Fokus was schwieriger zu vermeiden ist.
 	d_pushBackLock--;
 
 	dock->setWidget( ctrl->getTree() );
@@ -1351,12 +1355,12 @@ void Outliner::toFullScreen(QMainWindow * w)
 #endif
 }
 
-void Outliner::addTopCommands(Gui2::AutoMenu * pop )
+void Outliner::addTopCommands(Gui::AutoMenu * pop )
 {
 	Q_ASSERT( pop != 0 );
 	pop->addSeparator();
 
-	Gui2::AutoMenu * sub = new AutoMenu( tr("Navigate" ), pop );
+    Gui::AutoMenu * sub = new AutoMenu( tr("Navigate" ), pop );
 	pop->addMenu( sub );
 	setupNaviMenu(sub);
 

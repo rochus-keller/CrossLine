@@ -2,13 +2,13 @@
 #define OUTLINER2_H
 
 /*
-* Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.info>
+* Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.ch>
 *
 * This file is part of the CrossLine application.
 *
 * The following is the license that applies to this copy of the
 * application. For a license to use the application under conditions
-* other than those described here, please email to me@rochus-keller.info.
+* other than those described here, please email to me@rochus-keller.ch.
 *
 * GNU General Public License Usage
 * This file may be used under the terms of the GNU General Public
@@ -23,7 +23,7 @@
 #include <QMainWindow>
 #include <Udb/Obj.h>
 #include <QStack>
-#include <Gui2/AutoMenu.h>
+#include <GuiTools/AutoMenu.h>
 
 class QModelIndex;
 class QTreeView;
@@ -40,7 +40,7 @@ namespace Oln
 	class SearchView2;
 	class RefByItemMdl;
     class Repository;
-	class DocTabWidget;
+    class DocTabWidget;
 
 	class Outliner : public QMainWindow
 	{
@@ -58,10 +58,10 @@ namespace Oln
 	protected:
 		void setCaption();
 		void setupMenu();
-		void setupItemMenu( Gui2::AutoMenu* );
-		void setupTextMenu( Gui2::AutoMenu* );
-		void setupNaviMenu( Gui2::AutoMenu* );
-		void setupCopyMenu( Gui2::AutoMenu* );
+        void setupItemMenu( Gui::AutoMenu* );
+        void setupTextMenu( Gui::AutoMenu* );
+        void setupNaviMenu( Gui::AutoMenu* );
+        void setupCopyMenu( Gui::AutoMenu* );
 		void setupTrace();
 		void setupAliasList();
 		void setupSearch();
@@ -77,7 +77,7 @@ namespace Oln
 		OutlineUdbCtrl* showInDocks( const Udb::Obj& oln, const Udb::Obj& item );
 		void copyRef( Udb::Obj, bool docRef = true );
         static void toFullScreen( QMainWindow* );
-		void addTopCommands( Gui2::AutoMenu* );
+        void addTopCommands( Gui::AutoMenu* );
 		void pushBack(const Udb::Obj & o);
 		// Overrides
 		void closeEvent ( QCloseEvent * event );
@@ -131,7 +131,7 @@ namespace Oln
 		QList<OutlineUdbCtrl*> d_docks;
 		SearchView* d_search;
 		SearchView2* d_sv2;
-		Oln::DocTabWidget* d_tab;
+        Oln::DocTabWidget* d_tab;
 		QList<Udb::OID> d_backHisto; // d_backHisto.last() ist aktuell angezeigtes Objekt
 		QList<Udb::OID> d_forwardHisto;
 		Repository* d_doc;

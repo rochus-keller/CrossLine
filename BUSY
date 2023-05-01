@@ -1,0 +1,255 @@
+# author: Rochus Keller (me@rochus-keller.ch)
+# License: GPL
+# See https://github.com/rochus-keller/CrossLine on how to use this file
+
+if busy_version < "2023-01-15" {
+    error("this version of BUSY is not compatible with this build")
+}
+
+submod qt = ../LeanQt (HAVE_ITEMVIEWS, HAVE_ZLIB, HAVE_LOCALSOCK, HAVE_PROCESS,
+                        HAVE_FONTCONFIG, HAVE_PLUGINS)
+
+let build_config : Config {
+    .include_dirs += ..
+    .defines += "QT_GUI"
+    .configs += qt.qt_client_config
+    if build_mode == `debug {
+        .defines += "_DEBUG"
+    }
+}
+
+let mtconf : Config {
+    .cflags = [ "/O2", "/MT" ]
+}
+
+if (build_mode == `optimized) && (target_toolchain == `msvc) {
+    set_defaults(target_toolchain,mtconf)
+}
+
+let fts : SourceSet {
+    .sources += [
+        ../Fts/Tokenizer.cpp
+        ../Fts/Stopper.cpp
+        ../Fts/Stemmer.cpp
+        ../Fts/LibStemmerUtils.cpp
+        ../Fts/IndexEngine.cpp
+    ]
+    .configs += build_config
+}
+
+let guitools : SourceSet {
+    .sources += [
+        ../GuiTools/AutoMenu.cpp
+        ../GuiTools/AutoShortcut.cpp
+        ../GuiTools/AutoToolBar.cpp
+        ../GuiTools/NamedFunction.cpp
+        ../GuiTools/UiFunction.cpp
+        ../GuiTools/CodeEditor.cpp
+        ../GuiTools/Controller.cpp
+    ]
+    .configs += build_config
+}
+
+let oln2 : SourceSet {
+    .sources += [
+        ../Oln2/EditUrlDlg.cpp
+        ../Oln2/HtmlToOutline.cpp
+        ../Oln2/OutlineDeleg.cpp
+        ../Oln2/OutlineMdl.cpp
+        ../Oln2/OutlineStream.cpp
+        ../Oln2/OutlineToHtml.cpp
+        ../Oln2/OutlineTree.cpp
+        ../Oln2/OutlineUdbCtrl.cpp
+        ../Oln2/OutlineUdbMdl.cpp
+        ../Oln2/TextToOutline.cpp
+        ../Oln2/OutlineCtrl.cpp
+        ../Oln2/LinkSupport.cpp
+        ../Oln2/OutlineItem.cpp
+        ../Oln2/RefByItemMdl.cpp
+        ../Oln2/OutlineUdbStream.cpp
+    ]
+    .configs += build_config
+}
+
+let stream : SourceSet {
+    .sources += [
+        ../Stream/BmlRecord.cpp
+        ../Stream/DataCell.cpp
+        ../Stream/DataReader.cpp
+        ../Stream/DataWriter.cpp
+        ../Stream/Helper.cpp
+        ../Stream/NameTag.cpp
+        ../Stream/TimeSlot.cpp
+    ]
+    .configs += build_config
+}
+
+let txt : SourceSet {
+    .sources += [
+        ../Txt/ImageGlyph.cpp
+        ../Txt/Styles.cpp
+        ../Txt/TextCtrl.cpp
+        ../Txt/TextCursor.cpp
+        ../Txt/TextInStream.cpp
+        ../Txt/TextMimeData.cpp
+        ../Txt/TextOutHtml.cpp
+        ../Txt/TextOutStream.cpp
+        ../Txt/TextView.cpp
+        ../Txt/LinkIcon.cpp
+        ../Txt/TextHtmlParser.cpp
+        ../Txt/TextHtmlImporter.cpp
+    ]
+    .configs += build_config
+}
+
+let udb : SourceSet {
+    .sources += [
+        ../Udb/BtreeCursor.cpp
+        ../Udb/BtreeMeta.cpp
+        ../Udb/BtreeStore.cpp
+        ../Udb/Database.cpp
+        ../Udb/DatabaseException.cpp
+        ../Udb/Extent.cpp
+        ../Udb/Idx.cpp
+        ../Udb/Mit.cpp
+        ../Udb/Obj.cpp
+        ../Udb/Qit.cpp
+        ../Udb/Record.cpp
+        ../Udb/Transaction.cpp
+        ../Udb/ContentObject.cpp
+        ../Udb/Global.cpp
+        ../Udb/InvQueueMdl.cpp
+    ]
+    .configs += build_config
+}
+
+let sqlite : SourceSet {
+    .sources += [
+        ../Sqlite3/alter.c
+        ../Sqlite3/analyze.c
+        ../Sqlite3/attach.c
+        ../Sqlite3/auth.c
+        ../Sqlite3/bitvec.c
+        ../Sqlite3/btmutex.c
+        ../Sqlite3/btree.c
+        ../Sqlite3/build.c
+        ../Sqlite3/callback.c
+        ../Sqlite3/complete.c
+        ../Sqlite3/date.c
+        ../Sqlite3/debug_print.cpp
+        ../Sqlite3/delete.c
+        ../Sqlite3/expr.c
+        ../Sqlite3/fault.c
+        ../Sqlite3/func.c
+        ../Sqlite3/hash.c
+        ../Sqlite3/insert.c
+        ../Sqlite3/journal.c
+        ../Sqlite3/legacy.c
+        ../Sqlite3/loadext.c
+        ../Sqlite3/sqlitemain.c
+        ../Sqlite3/malloc.c
+        ../Sqlite3/mem1.c
+        ../Sqlite3/mem2.c
+        ../Sqlite3/mem3.c
+        ../Sqlite3/mem4.c
+        ../Sqlite3/mem5.c
+        ../Sqlite3/mutex.c
+        ../Sqlite3/mutex_os2.c
+        ../Sqlite3/mutex_unix.c
+        ../Sqlite3/mutex_w32.c
+        ../Sqlite3/opcodes.c
+        ../Sqlite3/os.c
+        ../Sqlite3/os_os2.c
+        ../Sqlite3/os_unix.c
+        ../Sqlite3/os_win.c
+        ../Sqlite3/pager.c
+        ../Sqlite3/parse.c
+        ../Sqlite3/pragma.c
+        ../Sqlite3/prepare.c
+        ../Sqlite3/printf.c
+        ../Sqlite3/random.c
+        ../Sqlite3/select.c
+        ../Sqlite3/table.c
+        ../Sqlite3/tokenize.c
+        ../Sqlite3/trigger.c
+        ../Sqlite3/update.c
+        ../Sqlite3/utf.c
+        ../Sqlite3/util.c
+        ../Sqlite3/vacuum.c
+        ../Sqlite3/vdbe.c
+        ../Sqlite3/vdbeapi.c
+        ../Sqlite3/vdbeaux.c
+        ../Sqlite3/vdbeblob.c
+        ../Sqlite3/vdbefifo.c
+        ../Sqlite3/vdbemem.c
+        ../Sqlite3/vtab.c
+        ../Sqlite3/where.c
+    ]
+    .defines += "SQLITE_OMIT_LOAD_EXTENSION"
+}
+
+let run_moc : Moc {
+    .sources += [
+        ./Outliner.h
+        ./SearchView2.h
+        ./AppContext.h
+        ./DocSelector.h
+        ./DocTabWidget.h
+
+        ../Fts/IndexEngine.h
+
+        ../GuiTools/CodeEditor.h
+        ../GuiTools/AutoShortcut.h
+        ../GuiTools/AutoMenu.h
+        ../GuiTools/UiFunction.h
+
+        ../Oln2/OutlineTree.h
+        ../Oln2/OutlineUdbCtrl.h
+        ../Oln2/OutlineUdbMdl.h
+        ../Oln2/OutlineDeleg.h
+        ../Oln2/OutlineCtrl.h
+        ../Oln2/RefByItemMdl.h
+        ../Oln2/EditUrlDlg.h
+
+        ../Txt/Styles.h
+        ../Txt/TextView.h
+        ../Txt/TextCtrl.h
+        ../Txt/ImageGlyph.h
+        ../Txt/LinkIcon.h
+
+        ../Udb/Transaction.h
+        ../Udb/Database.h
+        ../Udb/InvQueueMdl.h
+
+    ]
+}
+
+let run_rcc : Rcc {
+    .deps += qt.copy_rcc;
+    .tool_dir = root_build_dir + relpath(qt);
+    .sources += ./CrossLine.qrc
+}
+
+let app ! : Executable {
+    .name = "CrossLine"
+    .sources = [
+        ./AppContext.cpp
+        ./ChangeNameDlg.cpp
+        ./DocTraceMdl.cpp
+        ./EccoToOutline.cpp
+        ./CrossLineMain.cpp
+        ./Outliner.cpp
+        ./TypeDefs.cpp
+        ./Repository.cpp
+        ./SearchView2.cpp
+        ./DocSelector.cpp
+        ./DocTabWidget.cpp
+    ]
+    .deps += [ qt.copy_rcc qt.libqt qt.libqtsingleapp run_rcc run_moc sqlite fts guitools oln2 stream txt udb ]
+    .configs += build_config
+    if target_os == `win32 {
+        .deps += qt.libqtwinmain
+    }
+}
+
+# TODO: support application icon on Windows
