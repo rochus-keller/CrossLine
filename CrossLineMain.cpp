@@ -127,9 +127,12 @@ int main(int argc, char *argv[])
 		
 		if( path.isEmpty() )
 			path = QFileDialog::getSaveFileName( 0, AppContext::tr("Create/Open Repository - CrossLine"), 
-				QString(), QString( "*%1" ).arg( QLatin1String( AppContext::s_extension ) ), 
-				0, QFileDialog::DontConfirmOverwrite );
-            //| QFileDialog::DontUseNativeDialog : damit funktionieren Aliasse nicht
+				QString(), QString( "*%1" ).arg( QLatin1String( AppContext::s_extension ) ), 0, 
+				QFileDialog::DontConfirmOverwrite 
+#ifdef Q_OS_MAC
+                    | QFileDialog::DontUseNativeDialog // damit funktionieren Aliasse nicht
+#endif
+				);
 		if( path.isEmpty() )
 			return 0;
 
