@@ -62,7 +62,7 @@ using namespace Oln;
 using namespace Gui;
 
 Outliner::Outliner(Repository *doc, QWidget *parent)
-	: QMainWindow(parent), d_pushBackLock( 0 ), d_doc( doc ), d_fullScreen(false)
+    : QMainWindow(parent), d_pushBackLock( 0 ), d_doc( doc ), d_show(Normal)
 {
 	Udb::ContentObject::AttrText = AttrText;
 	Udb::ContentObject::AttrCreatedOn = AttrCreatedOn;
@@ -112,14 +112,23 @@ Outliner::Outliner(Repository *doc, QWidget *parent)
 	if( !state.isNull() )
 		restoreState( state.toByteArray() );
 
-	if( AppContext::inst()->getSet()->value( "MainFrame/State/FullScreen" ).toBool() )
+    d_show = AppContext::inst()->getSet()->value( "MainFrame/Show" ).toInt();
+    switch( d_show )
     {
+    case Normal:
+        {
+            showNormal();
+            QRect r = AppContext::inst()->getSet()->value( "MainFrame/Size" ).toRect();
+            if( r.isValid() )
+                setGeometry(r);
+        }
+        break;
+    case Maximized:
+        showMaximized();
+        break;
+    case FullScreen:
         toFullScreen( this );
-        d_fullScreen = true;
-    }else
-    {
-        showNormal();
-        d_fullScreen = false;
+        break;
     }
 
 	new QShortcut( tr("CTRL+Q"), this, SLOT( close() ) );
@@ -724,7 +733,8 @@ void Outliner::closeEvent( QCloseEvent * event )
 {
 	AppContext::inst()->getSet()->setValue("MainFrame/State/" +
 		d_doc->getDb()->getDbUuid().toString(), saveState() );
-	QMainWindow::closeEvent( event );
+    AppContext::inst()->getSet()->setValue("MainFrame/Size", geometry() );
+    QMainWindow::closeEvent( event );
 	if( event->isAccepted() )
 		emit closing();
 }
@@ -735,6 +745,20 @@ void Outliner::changeEvent(QEvent *event)
 	if( event->type() == QEvent::ActivationChange )
 		Binding::setTop( this );
 #endif
+    if( event->type() == QEvent::WindowStateChange )
+    {
+        if( ( windowState() & Qt::WindowFullScreen ) ||
+                ( windowState() & Qt::WindowMaximized && windowFlags() & Qt::FramelessWindowHint ) )
+            d_show = FullScreen;
+        else if( windowState() & Qt::WindowMaximized )
+            d_show = Maximized;
+        else
+        {
+            AppContext::inst()->getSet()->setValue("MainFrame/Size", geometry() );
+            d_show = Normal;
+        }
+        AppContext::inst()->getSet()->setValue("MainFrame/Show", d_show );
+    }
 	QMainWindow::changeEvent( event );
 }
 
@@ -1380,21 +1404,16 @@ void Outliner::addTopCommands(Gui::AutoMenu * pop )
 
 void Outliner::onFullScreen()
 {
-    CHECKED_IF( true, d_fullScreen );
+    CHECKED_IF( true, d_show == FullScreen );
 
-    if( d_fullScreen )
+    if( d_show == FullScreen )
     {
 #ifndef _WIN32
         setWindowFlags( Qt::Window );
 #endif
         showNormal();
-        d_fullScreen = false;
     }else
-    {
         toFullScreen( this );
-        d_fullScreen = true;
-    }
-    AppContext::inst()->getSet()->setValue("MainFrame/State/FullScreen", d_fullScreen );
 }
 
 void Outliner::onOpenFromDock()

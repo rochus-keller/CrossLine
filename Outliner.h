@@ -136,8 +136,9 @@ namespace Oln
 		QList<Udb::OID> d_forwardHisto;
 		Repository* d_doc;
 		quint16 d_pushBackLock;
-        bool d_fullScreen;
-	};
+        enum { Normal, Maximized, FullScreen };
+        quint8 d_show;
+    };
 }
 
 #endif // OUTLINER2_H

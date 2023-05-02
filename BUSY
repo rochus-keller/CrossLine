@@ -186,6 +186,7 @@ let sqlite : SourceSet {
         ../Sqlite3/where.c
     ]
     .defines += "SQLITE_OMIT_LOAD_EXTENSION"
+    .configs += build_config
 }
 
 let run_moc : Moc {

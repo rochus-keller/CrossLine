@@ -15,6 +15,7 @@ You can either compile CrossLine yourself or download the pre-compiled version f
 - [Linux x86](http://software.rochus-keller.ch/CrossLine_linux_x86.tar.gz)
 - [Linux x64](http://software.rochus-keller.ch/CrossLine_linux_x64.tar.gz)
 - [Mac x64](http://software.rochus-keller.ch/CrossLine_macos_x64.zip)
+- [Mac M1](http://software.rochus-keller.ch/CrossLine_macos_m1.zip)
 
 
 This is a compressed single-file executable which was built using the source code from here. Of course you can build the executable yourself if you want (see below for instructions). Since it is a single executable, it can just be downloaded and unpacked. No installation is necessary. You therefore need no special privileges to run CrossLine on your machine. 
