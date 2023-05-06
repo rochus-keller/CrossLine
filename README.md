@@ -6,6 +6,8 @@ An outliner (or outline processor) is a specialized type of text editor (word pr
 
 ![alt text](http://software.rochus-keller.ch/crosslinedemoscreenshot.png "CrossLine Screenshot")
 
+The screenshot shows the demo repository (see below).
+
 ## Download and Installation
 
 You can either compile CrossLine yourself or download the pre-compiled version from here: 
@@ -24,7 +26,7 @@ On Mac the terminal opens when CrossLine is run, and the menus are only active i
 
 Note that the Windows versions are built with MT flag using a statically linked C/C++ runtime, so no Microsoft runtime has to be installed. The executable runs even on Windows 7.
 
-Here is a demo file with some instructions on how to use CrossLine: [CrossLineDemo.cldb](http://software.rochus-keller.ch/CrossLineDemo.cldb)
+Here is a demo repository with some instructions on how to use CrossLine: [CrossLineDemo.cldb](http://software.rochus-keller.ch/CrossLineDemo.cldb)
 
 Here are the old Qt4 based versions if need be (use the new versions above if possile):
 
