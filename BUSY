@@ -2,6 +2,8 @@
 # License: GPL
 # See https://github.com/rochus-keller/CrossLine on how to use this file
 
+param HAVE_LUCENE = false   # support for optional Lucene search engine
+
 if busy_version < "2023-01-15" {
     error("this version of BUSY is not compatible with this build")
 }
@@ -9,12 +11,17 @@ if busy_version < "2023-01-15" {
 submod qt = ../LeanQt (HAVE_ITEMVIEWS, HAVE_ZLIB, HAVE_LOCALSOCK, HAVE_PROCESS,
                         HAVE_FONTCONFIG, HAVE_PLUGINS)
 
+let qt_client_config - = qt.qt_client_config
+
 let build_config : Config {
     .include_dirs += ..
     .defines += "QT_GUI"
-    .configs += qt.qt_client_config
+    .configs += qt_client_config
     if build_mode == `debug {
         .defines += "_DEBUG"
+    }
+    if HAVE_LUCENE {
+        .defines += "_HAS_CLUCENE_"
     }
 }
 
@@ -223,7 +230,15 @@ let run_moc : Moc {
         ../Udb/InvQueueMdl.h
 
     ]
+    if HAVE_LUCENE {
+        .sources += [
+            ./Indexer.h
+            ./SearchView.h
+        ]
+    }
 }
+
+submod lucene = ../QLucene else ./missing.busy
 
 let run_rcc : Rcc {
     .deps += qt.copy_rcc;
@@ -247,6 +262,10 @@ let app ! : Executable {
         ./DocTabWidget.cpp
     ]
     .deps += [ qt.copy_rcc qt.libqt qt.libqtsingleapp run_rcc run_moc sqlite fts guitools oln2 stream txt udb ]
+    if HAVE_LUCENE {
+        .sources += [ ./Indexer.cpp ./SearchView.cpp ]
+        .deps += lucene.sources
+    }
     .configs += build_config
     if target_os == `win32 {
         .deps += qt.libqtwinmain

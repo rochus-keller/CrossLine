@@ -1,11 +1,11 @@
 /*
-* Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.info>
+* Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.ch>
 *
 * This file is part of the CrossLine application.
 *
 * The following is the license that applies to this copy of the
 * application. For a license to use the application under conditions
-* other than those described here, please email to me@rochus-keller.info.
+* other than those described here, please email to me@rochus-keller.ch.
 *
 * GNU General Public License Usage
 * This file may be used under the terms of the GNU General Public
@@ -30,7 +30,7 @@
 #include <QSettings>
 #include <QResizeEvent>
 #include <QHeaderView>
-#include <Gui2/UiFunction.h>
+#include <GuiTools/UiFunction.h>
 #include "Indexer.h"
 #include "AppContext.h"
 #include "TypeDefs.h"
@@ -186,10 +186,10 @@ void SearchView::onSearch()
 			item->setFont( s_item, f );
 		}
 	}
-    d_result->header()->setResizeMode( s_item, QHeaderView::Stretch );
-	d_result->header()->setResizeMode( s_doc, QHeaderView::Interactive );
-	d_result->header()->setResizeMode( s_date, QHeaderView::ResizeToContents );
-	d_result->header()->setResizeMode( s_score, QHeaderView::ResizeToContents );
+    d_result->header()->setSectionResizeMode( s_item, QHeaderView::Stretch );
+    d_result->header()->setSectionResizeMode( s_doc, QHeaderView::Interactive );
+    d_result->header()->setSectionResizeMode( s_date, QHeaderView::ResizeToContents );
+    d_result->header()->setSectionResizeMode( s_score, QHeaderView::ResizeToContents );
     d_result->resizeColumnToContents( s_date );
 	d_result->resizeColumnToContents( s_score );
 	d_result->sortByColumn( s_date, Qt::DescendingOrder );

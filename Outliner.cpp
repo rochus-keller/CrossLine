@@ -341,6 +341,9 @@ void Outliner::setupNaviMenu(AutoMenu * sub)
 	sub->addCommand( tr("Forward"), this, SLOT(onGoForward()), tr("ALT+RIGHT") );
 	sub->addSeparator();
 	sub->addCommand( tr("Search Outlines..."),  this, SLOT(onSearch2()), tr("CTRL+F") );
+#ifdef _HAS_CLUCENE_
+    sub->addCommand( tr("Search with Lucene..."),  this, SLOT(onSearch()), tr("CTRL+SHIFT+F") );
+#endif
 }
 
 void Outliner::setupCopyMenu(AutoMenu * pop)

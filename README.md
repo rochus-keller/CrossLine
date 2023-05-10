@@ -49,13 +49,17 @@ Follow these steps if you want to build CrossLine yourself:
 1. Download https://github.com/rochus-keller/Stream/archive/refs/heads/leanqt.zip and unpack it to the root directory; rename the resulting directory to "Stream".
 1. Download https://github.com/rochus-keller/Txt/archive/refs/heads/leanqt.zip and unpack it to the root directory; rename the resulting directory to "Txt".
 1. Download https://github.com/rochus-keller/Udb/archive/refs/heads/leanqt.zip and unpack it to the root directory; rename the resulting directory to "GuiTools".
-1. Create the subdirectory "Sqlite3" the root directory; download the Sqlite source from http://software.rochus-keller.ch/Sqlite3.tar.gz and unpack it to the subdirectory.
+1. Download http://software.rochus-keller.ch/Sqlite3.zip and unpack it to the root directory, so that there is an Sqlite3 subdirectory.
 1. Open a command line in the build directory and type `cc *.c -O2 -lm -o lua` or `cl /O2 /MD /Fe:lua.exe *.c` depending on whether you are on a Unix or Windows machine; wait a few seconds until the Lua executable is built.
 1. Now type `./lua build.lua ../CrossLine` (or `lua build.lua ../CrossLine` on Windows); wait until the CrossLine executable is built; you find it in the output subdirectory.
 
 NOTE that if you build on Windows you have to first run vcvars32.bat or vcvars64.bat provided e.g. by VisualStudio (see e.g. [here](https://learn.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=msvc-170) for more information) from the command line to set all required paths and environment variables.
 
 If you already have a [LeanCreator](https://github.com/rochus-keller/LeanCreator/) executable on your machine, you can alternatively open the root_directory/CrossLine/BUSY file with LeanCreator and build it there using all available CPU cores (don't forget to switch to Release mode); this is simpler and faster than the command line build.
+
+### Lucene option
+
+In addition to the built-in Fts engine, Lucene can be integrated. If you need this option, download and unpack http://software.rochus-keller.ch/QLucene.zip to the root directory, so that there is a QLucene subdirectory, and add the `-P HAVE_LUCENE` parameter to the build command (so it looks e.g. like `lua build.lua ../CrossLine -P HAVE_LUCENE`).
 
 ## Support
 If you need support or would like to post issues or feature requests please use the Github issue list at https://github.com/rochus-keller/CrossLine/issues or send an email to the author.

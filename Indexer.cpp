@@ -1,11 +1,11 @@
 /*
-* Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.info>
+* Copyright 2010-2018 Rochus Keller <mailto:me@rochus-keller.ch>
 *
 * This file is part of the CrossLine application.
 *
 * The following is the license that applies to this copy of the
 * application. For a license to use the application under conditions
-* other than those described here, please email to me@rochus-keller.info.
+* other than those described here, please email to me@rochus-keller.ch.
 *
 * GNU General Public License Usage
 * This file may be used under the terms of the GNU General Public
@@ -32,13 +32,13 @@
 #include <QProgressDialog>
 #include <QDir>
 #include <Oln2/OutlineItem.h>
-#include <private/qindexwriter_p.h>
-#include <private/qanalyzer_p.h>
-#include <private/qindexreader_p.h>
-#include <private/qquery_p.h>
-#include <private/qsearchable_p.h>
-#include <private/qhits_p.h>
-#include <private/qqueryparser_p.h>
+#include <QLucene/qindexwriter_p.h>
+#include <QLucene/qanalyzer_p.h>
+#include <QLucene/qindexreader_p.h>
+#include <QLucene/qquery_p.h>
+#include <QLucene/qsearchable_p.h>
+#include <QLucene/qhits_p.h>
+#include <QLucene/qqueryparser_p.h>
 using namespace Oln;
 
 typedef QVector< QPair<quint64,quint16> > ObjList;

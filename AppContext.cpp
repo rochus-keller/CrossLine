@@ -49,8 +49,8 @@ const char* AppContext::s_domain = "me@rochus-keller.ch";
 const char* AppContext::s_appName = "CrossLine";
 const char* AppContext::s_extension = ".cldb";
 const char* AppContext::s_rootUuid = "{4A21E972-C254-4282-BD9F-714F8E0C7865}";
-const char* AppContext::s_version = "1.0.0";
-const char* AppContext::s_date = "2023-05-04";
+const char* AppContext::s_version = "1.0.1";
+const char* AppContext::s_date = "2023-05-10";
 
 #ifdef _HAS_LUA_
 static int type(lua_State * L)
